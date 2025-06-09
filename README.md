@@ -1,43 +1,33 @@
-# 🌍 Air Quality & Politics
+# 🌍 Análisis del Impacto de la Contaminación Atmosférica en la Mortalidad
 
-**Análisis y predicción de la calidad del aire en ciudades españolas en relación con las tendencias políticas locales.**
+## 🎯 Objetivo General
 
-## 🎯 Objetivo
+El objetivo de este proyecto es **analizar cómo influyen los niveles de contaminación atmosférica (ICA)** en la **tasa de mortalidad** por municipio o región, considerando también **factors sociodemográficos y políticos**. Se busca comprender si existen patrones o correlaciones relevantes que puedan orientar políticas públicas hacia una mejor calidad del aire y salud ciudadana.
 
-Este proyecto forma parte del trabajo final del bootcamp de Data Science en 4Geeks Academy. El objetivo es analizar y predecir la calidad del aire en las capitales de provincia de España, explorando su relación con variables meteorológicas y el signo político del gobierno local.
+## 📦 Variables Utilizadas
 
-## 📦 Datos
+### ✅ Variables Independientes (features)
+- **ICA promedio anual** (por municipio, provincia o comunidad autónoma)
+- **Población total**
+- **Edad media** o distribución por edad
+- **Porcentaje de mayores de 65 años**
+- **Sexo** (si se dispone de mortalidad desagregada por sexo)
+- **Altitud del municipio**
+- **Tipo de zona**: urbana / rural
+- **Color político** del gobierno local o autonómico
+- *(Opcional)* **Nivel educativo medio** o **renta media**
 
-- Calidad del aire: [MITECO](https://www.miteco.gob.es/es/calidad-y-evaluacion-ambiental/temas/atmosfera-y-calidad-del-aire/) y [OpenAQ](https://openaq.org/)
-- Meteorología: [AEMET](https://www.aemet.es/es/datos_abiertos/AEMET_OpenData)
-- Datos políticos: PHW/IFES, INE, Wikipedia
-- Población: INE
-- Contaminantes: PM2.5, PM10, NO2, SO2, CO, O3
+### 🎯 Variable Dependiente (target)
+- **Tasa de mortalidad general anual**
+- *(Alternativamente)* **Tasa de mortalidad por enfermedades respiratorias o cardiovasculares**, si se dispone de estos datos.
 
-## 🧱 Estructura
+## 🛠️ Técnicas Aplicadas
 
-- `src/`: scripts de extracción, limpieza y modelado
-- `data/`: datos crudos y procesados
-- `models/`: modelos entrenados
-- `notebooks/`: análisis exploratorio y modelado
-- `app/`: demo interactiva en Streamlit
+- Análisis exploratorio de datos (**EDA**) con mapas, comparativas y series temporales.
+- **Test estadísticos** de correlación y diferencias significativas: Pearson, ANOVA, t-test, etc.
+- Modelos de **regresión lineal** y/o **regresión logística** (clasificación por rangos de mortalidad).
+- Visualizaciones interactivas mediante **Streamlit** o dashboards.
+- *(Opcional)* **Clustering** de municipios por perfiles de riesgo.
 
-## 🧠 Modelos
-
-- Modelos de clasificación:
-  - Árboles de decisión
-  - Random Forest
-  - XGBoost
-- Modelos de regresión:
-  - Regresión lineal
-  - Random Forest Regressor
-- Modelos base para comparación:
-  - DummyClassifier / DummyRegressor
-
-## 🚀 Próximos pasos
-
-- Automatizar ETL de AEMET
-- Limpiar y unificar datasets
-- Modelar clasificación y predicción de calidad del aire
 
 *Este proyecto está en desarrollo como parte del bootcamp de Data Science de 4Geeks Academy.*
