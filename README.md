@@ -2,7 +2,7 @@
 
 ## 🎯 Objetivo General
 
-El objetivo de este proyecto es **analizar cómo influyen los niveles de contaminación atmosférica (ICA)** en la **tasa de mortalidad** por municipio o región, considerando también **factors sociodemográficos y políticos**. Se busca comprender si existen patrones o correlaciones relevantes que puedan orientar políticas públicas hacia una mejor calidad del aire y salud ciudadana.
+El objetivo de este proyecto es **analizar cómo influyen los niveles de contaminación atmosférica (ICA)** en la **tasa de mortalidad** por municipio o región, considerando también **factores sociodemográficos y políticos**. Se busca comprender si existen patrones o correlaciones relevantes que puedan orientar políticas públicas hacia una mejor calidad del aire y salud ciudadana.
 
 ## 📦 Variables Utilizadas
 
