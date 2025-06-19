@@ -1,68 +1,70 @@
-# 🌍 # Beyond the AQI: Factors Influencing Mortality by Province
+Más allá del ICA: Factores que influyen en la mortalidad por provincia
 
-> “What is essential is invisible to the eye.” — Antoine de Saint-Exupéry
+    “Lo esencial es invisible a los ojos.” — Antoine de Saint-Exupéry
 
----
+🎯 Objetivo del Proyecto
 
-## 🎯 Project Objective
+Este proyecto tiene como objetivo predecir el nivel de mortalidad (baja, media, alta) en las provincias españolas basado en variables ambientales, sociodemográficas y políticas.
 
-This project aims to predict the level of mortality (`low`, `medium`, `high`) across Spanish provinces based on environmental, sociodemographic, and political variables.
+Mediante aprendizaje automático y un enfoque multidisciplinar, exploramos cómo la calidad del aire, el contexto político, la clasificación urbano/rural y las causas de muerte se relacionan con los resultados de salud pública.
+🔍 Modelos desarrollados
 
-Using Machine Learning and a multidisciplinary approach, we explore how air quality, political context, urban/rural classification, and causes of death relate to public health outcomes.
+Se entrenaron y probaron dos modelos principales para abordar el problema:
 
----
+    Modelo Pre-COVID:
+    Entrenado con datos anteriores a 2020 para capturar patrones de mortalidad en condiciones “normales”. Este modelo ofrece mejor desempeño y menos ruido, por lo que será el modelo final usado en la app.
 
-## 🧠 Methodology
+    Modelo Completo (2020 en adelante):
+    Incluye datos durante y después de la pandemia COVID-19, lo que introduce un aumento abrupto y atípico en la mortalidad. Aunque refleja el impacto real, es más ruidoso y menos preciso. Se usa principalmente para análisis comparativos y estudios de sensibilidad.
 
-1. **Data Collection:**
-   - Air quality data (OpenAQ, AEMET, Spanish Ministry)
-   - Cause-specific mortality data (INE)
-   - Political context by province
-   - Sociodemographic variables
+🧠 Metodología
 
-2. **Data Processing:**
-   - Cleaning and normalization
-   - Categorical encoding
-   - Creation of the target variable `clase_mortalidad`
+    Recolección de datos:
 
-3. **Modeling:**
-   - Random Forest classifier optimized with GridSearchCV
-   - Evaluation using standard classification metrics
+        Calidad del aire (OpenAQ, AEMET, Ministerio)
 
-4. **Deployment:**
-   - Interactive Streamlit web app
-   - User input interface and real-time prediction
+        Mortalidad por causas específicas (INE)
 
----
+        Contexto político y variables sociodemográficas
 
-## 🚀 How to Run the App
+    Procesamiento:
 
-1. Clone the repository:
-```bash
-git clone https://github.com/your_user/proyecto_mortalidad_aire.git
-cd proyecto_mortalidad_aire
-```
+        Limpieza, normalización y codificación categórica
 
-2. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+        Creación de la variable objetivo clase_mortalidad (tertiles de mortalidad)
 
-3. Launch the app:
-```bash
-streamlit run app/app.py
-```
+    Modelado:
 
----
+        Random Forest optimizado con GridSearchCV
 
-## 📂 Project Structure
+        Evaluación con métricas clásicas y validación cruzada
 
-```
+    Despliegue:
+
+        Aplicación Streamlit para predicción en tiempo real
+
+        Interfaz amigable y visualizaciones claras
+
+🚀 Cómo ejecutar la aplicación
+
+    Clonar el repositorio:
+    git clone https://github.com/your_user/proyecto_mortalidad_aire.git
+    cd proyecto_mortalidad_aire
+
+    Instalar dependencias:
+    pip install -r requirements.txt
+
+    Ejecutar la app:
+    streamlit run app/app.py
+
+📂 Estructura del proyecto
+
 proyecto_mortalidad_aire/
 │
 ├── app/
 │   ├── app.py
-│   ├── modelo_random_forest.pkl
+│   ├── rf_pre_covid.pkl
+│   ├── rf_completo.pkl
 │   └── preprocesamiento.py
 │
 ├── data/
@@ -77,17 +79,37 @@ proyecto_mortalidad_aire/
 │
 ├── requirements.txt
 └── README.md
-```
 
----
+⚙️ Requisitos
 
-## 👩‍💻 Authors
+    Python 3.8+
 
-- María Pals  
-- María Miura
-- Ulla Aller
+    streamlit
 
-Data Science Bootcamp – 4Geeks Academy · June 2025
+    scikit-learn
+
+    pandas
+
+    matplotlib
+
+    seaborn
+
+    joblib
+
+Instalar con:
+pip install -r requirements.txt
 
 
-*Este proyecto está en desarrollo como parte del bootcamp de Data Science de 4Geeks Academy.*
+👩‍💻 Autoras
+
+    María Pais
+
+    María Miura
+
+    Ulla Aller
+
+Bootcamp de Data Science – 4Geeks Academy · Junio 2025
+
+📄 Licencia
+
+Este proyecto está en desarrollo como parte del bootcamp de Data Science de 4Geeks Academy.
