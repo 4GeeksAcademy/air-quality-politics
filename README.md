@@ -52,7 +52,8 @@ proyecto_mortalidad_aire/
 │   └── mapa_ica_provincias.png
 ├── requirements.txt
 └── README.md
-
+```
+---
 ### ⚙️ Requisitos
 -  Python 3.8+
     streamlit
@@ -69,6 +70,7 @@ María Pais
 María Miura
 
 Ulla Aller
+
 Bootcamp Data Science – 4Geeks Academy · Junio 2025
 ### 📄 Licencia
 Este proyecto está en desarrollo como parte del Bootcamp de Data Science de 4Geeks Academy.
