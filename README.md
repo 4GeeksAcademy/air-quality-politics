@@ -35,9 +35,10 @@ Con aprendizaje automático y un enfoque multidisciplinar, exploramos cómo la c
     Ejecutar la app:
     streamlit run app/app.py
 
-### 📂 Estructura del proyecto
-```text
+📂 Estructura del proyecto
+
 proyecto_mortalidad_aire/
+│
 ├── app/
 │   ├── app.py
 │   ├── rf_pre_covid.pkl
@@ -47,7 +48,8 @@ proyecto_mortalidad_aire/
 │   └── df_procesado.csv
 ├── notebooks/
 │   ├── 01_exploracion.ipynb
-│   └── 02_modelado.ipynb
+│   ├── 02_modelado.ipynb
+│
 ├── img/
 │   └── mapa_ica_provincias.png
 ├── requirements.txt
