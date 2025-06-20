@@ -38,39 +38,71 @@ Predecir el nivel de mortalidad (baja, media, alta) en las provincias españolas
 ------
 
 ### 🚀 Cómo ejecutar la aplicación  
-- **Clonar el repositorio**  Clonar el repositorio:
-    git clone https://github.com/your_user/proyecto_mortalidad_aire.git
-    cd proyecto_mortalidad_aire
-    Instalar dependencias:
-    pip install -r requirements.txt
-    Ejecutar la app:
-    streamlit run app/app.py
- ### 📂 Estructura del proyectoproyecto_mortalidad_aire/
+- **Clonar el repositorio**  
+  ```bash
+  git clone https://github.com/your_user/proyecto_mortalidad_aire.git  
+  cd proyecto_mortalidad_aire
+Instalar dependencias
 
+bash
+Copiar
+Editar
+pip install -r requirements.txt
+Ejecutar la app
+
+bash
+Copiar
+Editar
+streamlit run app/app.py
+📂 Estructura del proyecto
+css
+Copiar
+Editar
+proyecto_mortalidad_aire/
 ├── app/
 │   ├── app.py
 │   ├── rf_pre_covid.pkl
 │   ├── rf_completo.pkl
 │   └── preprocesamiento.py
-│
 ├── data/
-│   ├── df_procesado.csv
-│
+│   └── df_procesado.csv
 ├── notebooks/
 │   ├── 01_exploracion.ipynb
-│   ├── 02_modelado.ipynb
-│
+│   └── 02_modelado.ipynb
 ├── img/
 │   └── mapa_ica_provincias.png
-│
 ├── requirements.txt
 └── README.md
-- **Desbalance en ICA**: “Buena” domina; “Razonablemente buena” y “Desfavorable” se concentran más en áreas urbanas/suburbanas.  
-- **Normalización necesaria**:  
-  - Uso de logaritmos o cálculo de tasas por 100 000 habitantes por la gran disparidad poblacional.  
-- **Patrones significativos**:  
-  - Meses con ICA > 30 coinciden con incrementos locales de mortalidad (ej. Barcelona).  
-  - Aumento notable en 2020 debido al COVID.  
-- **Análisis estadístico final**:  
-  - Creamos `muertes_por_100k` y categorizamos `Riesgo_ICA` (bajo/medio/alto).  
-  - Test de Kruskal–Wallis muestra diferencias estadísticamente significativas entre grupos (p < 0.05), vinculado peores niveles de ICA con mayor mortalidad.
+⚙️ Requisitos
+Python ≥ 3.8
+
+Librerías necesarias:
+
+streamlit
+
+scikit‑learn
+
+pandas
+
+matplotlib
+
+seaborn
+
+joblib
+
+Instalación:
+
+bash
+Copiar
+Editar
+pip install -r requirements.txt
+👩‍💻 Autoras
+María Pais
+
+María Miura
+
+Ulla Aller
+Bootcamp de Data Science – 4Geeks Academy · Junio 2025
+
+📄 Licencia
+Este proyecto está en desarrollo como parte del Bootcamp de Data Science de 4Geeks Academy.
