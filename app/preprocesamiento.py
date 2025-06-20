@@ -3,15 +3,14 @@ import numpy as np
 import joblib
 import os
 
-# Ruta relativa al archivo columnas_modelo.pkl, ajústala si cambias estructura carpetas
+# Ruta relativa para cargar las columnas que usa el modelo
 path_columnas = os.path.join(os.path.dirname(__file__), '../models/columnas_modelo.pkl')
 columnas_modelo = joblib.load(path_columnas)
 
 def preparar_datos(df_input):
-    # Renombrar columnas para consistencia si fuera necesario (aquí se asume ya están bien nombradas)
     df = df_input.copy()
 
-    # Categorías fijas (ajusta si cambias en entrenamiento)
+    # Categorías fijas para que coincidan con entrenamiento
     df['tipo_area'] = pd.Categorical(df['tipo_area'], categories=['SUBURBANA', 'URBANA', 'RURAL'])
     df['causa_de_muerte'] = pd.Categorical(df['causa_de_muerte'], categories=[
         '001-008  I.Enfermedades infecciosas y parasitarias',
@@ -35,20 +34,21 @@ def preparar_datos(df_input):
     df['sexo'] = pd.Categorical(df['sexo'], categories=['Hombres', 'Mujeres'])
     df['partido'] = pd.Categorical(df['partido'], categories=['PP', 'PSOE', 'PSC', 'PNV', 'CiU', 'UPN', 'DO', 'CC', 'IU'])
 
-    # One-hot encoding
+    # One-hot encoding de variables categóricas
     df = pd.get_dummies(df, columns=['partido', 'tipo_area', 'causa_de_muerte', 'sexo'], drop_first=True)
 
-    # Normalizar variables numéricas
-    df['valor_ica'] = df['valor_ica'] / 300  # máximo esperado
+    # Normalización acorde al entrenamiento
+    df['valor_ica'] = df['valor_ica'] / 300  # máximo ICA esperado
     df['poblacion'] = np.log1p(df['poblacion'])
-    df['altitud'] = df['altitud'] / 3000  # máximo esperado
+    df['altitud'] = df['altitud'] / 3000  # máximo altitud esperado
 
-    # Añadir columnas faltantes para coincidir con columnas del modelo
+    # Añadir columnas que faltan para alinear con modelo
     for col in columnas_modelo:
         if col not in df.columns:
             df[col] = 0
 
-    # Reordenar columnas según el modelo
+    # Reordenar columnas según el orden usado en el modelo
     X = df[columnas_modelo]
 
     return X
+

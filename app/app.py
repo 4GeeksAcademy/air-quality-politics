@@ -1,15 +1,14 @@
 import streamlit as st
-st.set_page_config(page_title="Predicción de Mortalidad", layout="centered")
-
 import os
 import pandas as pd
 import joblib
 import matplotlib.pyplot as plt
 import seaborn as sns
 import gdown
-from preprocesamiento import preparar_datos  # Ajusta la ruta si hace falta
+from preprocesamiento import preparar_datos  # Ajusta según ruta real
 
-# Diccionario completo provincias y códigos INE
+st.set_page_config(page_title="Predicción de Mortalidad", layout="centered")
+
 provincias_codigos = {
     "Álava": "01", "Albacete": "02", "Alicante": "03", "Almería": "04", "Ávila": "05",
     "Badajoz": "06", "Islas Baleares": "07", "Barcelona": "08", "Burgos": "09", "Cáceres": "10",
@@ -23,7 +22,6 @@ provincias_codigos = {
     "Vizcaya": "48", "Zamora": "49", "Zaragoza": "50", "Ceuta": "51", "Melilla": "52"
 }
 
-# URL del modelo en Google Drive para descargar
 url_modelo_drive = "https://drive.google.com/uc?id=1L3H0PgtyXa5hIaZHjpuPjXUGoggrRg6s"
 ruta_modelo_local = "models/rf_pre_covid.pkl"
 
@@ -34,7 +32,6 @@ def descargar_modelo_si_no_existe(url, path):
     else:
         st.info("Modelo cargado desde disco local.")
 
-# Descargar modelo al inicio
 descargar_modelo_si_no_existe(url_modelo_drive, ruta_modelo_local)
 
 @st.cache_resource
@@ -43,13 +40,23 @@ def cargar_modelo(ruta):
 
 modelo = cargar_modelo(ruta_modelo_local)
 
-st.title("🚲 Predicción del Nivel de Mortalidad por Provincia")
+st.title("Análisis y Predicción del Nivel de Mortalidad por Calidad del Aire")
 
 st.markdown("""
 Esta aplicación estima el nivel de mortalidad (**baja**, **media**, **alta**) según datos **ambientales**, **políticos** y **sociales**.
 """)
 
-partidos = ['PP', 'PSOE', 'PSC', 'PNV', 'CiU', 'UPN', 'DO', 'CC', 'IU']
+partidos = [
+    'PP - Partido Popular',
+    'PSOE - Partido Socialista Obrero Español',
+    'PSC - Partit dels Socialistes de Catalunya',
+    'PNV - Partido Nacionalista Vasco',
+    'CiU - Convergència i Unió',
+    'UPN - Unión del Pueblo Navarro',
+    'DO - Democracia Ourensana',
+    'CC - Coalición Canaria',
+    'IU - Izquierda Unida'
+]
 tipos_area = ['SUBURBANA', 'URBANA', 'RURAL']
 sexos = ['Hombres', 'Mujeres']
 causas_de_muerte = [
@@ -72,14 +79,15 @@ causas_de_muerte = [
     '090-102  XX.Causas externas de mortalidad'
 ]
 
+valor_ica = st.slider("Valor ICA (calidad del aire)", min_value=0.0, max_value=150.0, value=50.0)
+
 with st.form("formulario_prediccion"):
     provincia = st.selectbox("Provincia", list(provincias_codigos.keys()))
-    ica = st.slider("Valor ICA", min_value=0.0, max_value=300.0, value=50.0)
     codigo_provincia = provincias_codigos[provincia]
-    altitud = st.number_input("Altitud (metros)", min_value=0, max_value=3000, value=50)
+    altitud = st.number_input("Altitud (metros)", min_value=0, max_value=2100, value=50)
     sexo = st.selectbox("Sexo", sexos)
     tipo_area = st.selectbox("Tipo de área", tipos_area)
-    poblacion = st.number_input("Población", min_value=0, value=100000)
+    poblacion = st.number_input("Población", min_value=0, max_value=4000000, value=100000)
     partido = st.selectbox("Partido político", partidos)
     causa_de_muerte = st.selectbox("Causa de muerte", causas_de_muerte)
 
@@ -89,12 +97,12 @@ if submitted:
     df_input = pd.DataFrame([{
         'provincias': provincia,
         'codigo_provincia': codigo_provincia,
-        'valor_ica': ica,
+        'valor_ica': valor_ica,
         'altitud': altitud,
         'sexo': sexo,
         'tipo_area': tipo_area,
         'poblacion': poblacion,
-        'partido': partido,
+        'partido': partido.split(' - ')[0],
         'causa_de_muerte': causa_de_muerte
     }])
 
@@ -102,12 +110,17 @@ if submitted:
     pred = modelo.predict(X_input)[0]
     proba = modelo.predict_proba(X_input)[0]
 
-    st.success(f"### Predicción: {pred.upper()}")
+    colores_pred = {'baja': '#28a745', 'media': '#ffc107', 'alta': '#dc3545'}
+    color_pred = colores_pred.get(pred, '#007bff')
 
-    fig, ax = plt.subplots()
-    sns.barplot(x=modelo.classes_, y=proba, ax=ax)
+    st.markdown(f"<h3 style='color:{color_pred}'>Predicción: {pred.upper()}</h3>", unsafe_allow_html=True)
+
+    fig, ax = plt.subplots(figsize=(6,4))
+    sns.barplot(x=modelo.classes_, y=proba, palette=[colores_pred.get(c, '#007bff') for c in modelo.classes_], ax=ax)
+    ax.set_ylim(0,1)
     ax.set_ylabel("Probabilidad")
     ax.set_xlabel("Nivel de mortalidad")
+    ax.set_title("Probabilidades de Predicción")
+    for i, v in enumerate(proba):
+        ax.text(i, v + 0.02, f"{v:.2f}", ha='center', fontsize=10)
     st.pyplot(fig)
-
-
