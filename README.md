@@ -36,22 +36,22 @@ Con aprendizaje automático y un enfoque multidisciplinar, exploramos cómo la c
     streamlit run app/app.py
 
 ### 📂 Estructura del proyecto
+```text
 proyecto_mortalidad_aire/
 ├── app/
-│ ├── app.py
-│ ├── rf_pre_covid.pkl
-│ ├── rf_completo.pkl
-│ └── preprocesamiento.py
+│   ├── app.py
+│   ├── rf_pre_covid.pkl
+│   ├── rf_completo.pkl
+│   └── preprocesamiento.py
 ├── data/
-│ └── df_procesado.csv
+│   └── df_procesado.csv
 ├── notebooks/
-│ ├── 01_exploracion.ipynb
-│ └── 02_modelado.ipynb
+│   ├── 01_exploracion.ipynb
+│   └── 02_modelado.ipynb
 ├── img/
-│ └── mapa_ica_provincias.png
+│   └── mapa_ica_provincias.png
 ├── requirements.txt
 └── README.md
----
 
 ### ⚙️ Requisitos
 -  Python 3.8+
