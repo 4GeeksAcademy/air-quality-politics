@@ -36,7 +36,7 @@ Con aprendizaje automático y un enfoque multidisciplinar, exploramos cómo la c
     streamlit run app/app.py
 
 📂 Estructura del proyecto
-
+### 📂 Estructura del proyecto```
 proyecto_mortalidad_aire/
 │
 ├── app/
@@ -49,30 +49,32 @@ proyecto_mortalidad_aire/
 ├── notebooks/
 │   ├── 01_exploracion.ipynb
 │   ├── 02_modelado.ipynb
-│
 ├── img/
 │   └── mapa_ica_provincias.png
 ├── requirements.txt
 └── README.md
-```
----
+```---  ```
 ### ⚙️ Requisitos
--  Python 3.8+
-    streamlit
-    scikit-learn
-    pandas
-    matplotlib
-    seaborn
-    joblib
-Instalar con:
+
+- Python 3.8+
+- streamlit  
+- scikit-learn  
+- pandas  
+- matplotlib  
+- seaborn  
+- joblib
+
+Para instalar las dependencias:
+
+```bash```
 pip install -r requirements.txt
+
+
+---
+
 ### 👩‍💻 Autoras
-María Pais
 
-María Miura
+María País  
+Ulla Aller  
+María Miura
 
-Ulla Aller
-
-Bootcamp Data Science – 4Geeks Academy · Junio 2025
-### 📄 Licencia
-Este proyecto está en desarrollo como parte del Bootcamp de Data Science de 4Geeks Academy.
