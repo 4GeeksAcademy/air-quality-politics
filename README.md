@@ -89,7 +89,7 @@ pip install -r requirements.txt
 
 ### 👩‍💻 Autoras
 
-- María País  
+- María Pais  
 - Ulla Aller  
 - María Miura
 
