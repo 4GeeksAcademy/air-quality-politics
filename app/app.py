@@ -7,6 +7,8 @@ import seaborn as sns
 import gdown
 from preprocesamiento import preparar_datos  # Ajusta según ruta real
 
+st.write("✅ La app se ha iniciado correctamente.")
+
 st.set_page_config(page_title="Predicción de Mortalidad", layout="centered")
 
 provincias_codigos = {
@@ -32,13 +34,16 @@ def descargar_modelo_si_no_existe(url, path):
     else:
         st.info("Modelo cargado desde disco local.")
 
-descargar_modelo_si_no_existe(url_modelo_drive, ruta_modelo_local)
+#descargar_modelo_si_no_existe(url_modelo_drive, ruta_modelo_local)
 
-@st.cache_resource
-def cargar_modelo(ruta):
-    return joblib.load(ruta)
+#@st.cache_resource
+#def cargar_modelo(ruta):
+    #return joblib.load(ruta)
 
-modelo = cargar_modelo(ruta_modelo_local)
+#modelo = cargar_modelo(ruta_modelo_local)
+
+modelo = None
+st.warning("⚠️ El modelo no se ha cargado (modo prueba).")
 
 st.title("Análisis y Predicción del Nivel de Mortalidad por Calidad del Aire")
 
