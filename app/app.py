@@ -5,12 +5,29 @@ import joblib
 import matplotlib.pyplot as plt
 import seaborn as sns
 import gdown
-from preprocesamiento import preparar_datos  # Ajusta según ruta real
+from preprocesamiento import preparar_datos  # Asegúrate de que esta ruta es válida
 
+# Configuración inicial
+st.set_page_config(page_title="Predicción de Mortalidad", layout="centered")
 st.write("✅ La app se ha iniciado correctamente.")
 
-st.set_page_config(page_title="Predicción de Mortalidad", layout="centered")
+# ---------------- CARGA DEL MODELO DESDE DRIVE ---------------- #
+url_modelo_drive = "https://drive.google.com/uc?id=1blwUBvJke6ZwsSaPnRP9n3QzjImRHSzI"
+ruta_modelo_local = "models/rf_pre_covid.pkl"
 
+@st.cache_resource
+def cargar_modelo_desde_drive():
+    if not os.path.exists(ruta_modelo_local):
+        st.info("📦 Descargando modelo desde Google Drive...")
+        gdown.download(url_modelo_drive, ruta_modelo_local, quiet=False)
+    else:
+        st.info("✅ Modelo ya está en disco local.")
+    return joblib.load(ruta_modelo_local)
+
+modelo = cargar_modelo_desde_drive()
+# --------------------------------------------------------------- #
+
+# Diccionario de provincias
 provincias_codigos = {
     "Álava": "01", "Albacete": "02", "Alicante": "03", "Almería": "04", "Ávila": "05",
     "Badajoz": "06", "Islas Baleares": "07", "Barcelona": "08", "Burgos": "09", "Cáceres": "10",
@@ -24,27 +41,7 @@ provincias_codigos = {
     "Vizcaya": "48", "Zamora": "49", "Zaragoza": "50", "Ceuta": "51", "Melilla": "52"
 }
 
-url_modelo_drive = "https://drive.google.com/uc?id=1blwUBvJke6ZwsSaPnRP9n3QzjImRHSzI"
-ruta_modelo_local = "models/rf_pre_covid.pkl"
-
-def descargar_modelo_si_no_existe(url, path):
-    if not os.path.exists(path):
-        st.info("Descargando modelo, por favor espera...")
-        gdown.download(url, path, quiet=False)
-    else:
-        st.info("Modelo cargado desde disco local.")
-
-#descargar_modelo_si_no_existe(url_modelo_drive, ruta_modelo_local)
-
-#@st.cache_resource
-#def cargar_modelo(ruta):
-    #return joblib.load(ruta)
-
-#modelo = cargar_modelo(ruta_modelo_local)
-
-modelo = None
-st.warning("⚠️ El modelo no se ha cargado (modo prueba).")
-
+# Formulario y predicción
 st.title("Análisis y Predicción del Nivel de Mortalidad por Calidad del Aire")
 
 st.markdown("""
@@ -52,15 +49,10 @@ Esta aplicación estima el nivel de mortalidad (**baja**, **media**, **alta**) s
 """)
 
 partidos = [
-    'PP - Partido Popular',
-    'PSOE - Partido Socialista Obrero Español',
-    'PSC - Partit dels Socialistes de Catalunya',
-    'PNV - Partido Nacionalista Vasco',
-    'CiU - Convergència i Unió',
-    'UPN - Unión del Pueblo Navarro',
-    'DO - Democracia Ourensana',
-    'CC - Coalición Canaria',
-    'IU - Izquierda Unida'
+    'PP - Partido Popular', 'PSOE - Partido Socialista Obrero Español',
+    'PSC - Partit dels Socialistes de Catalunya', 'PNV - Partido Nacionalista Vasco',
+    'CiU - Convergència i Unió', 'UPN - Unión del Pueblo Navarro',
+    'DO - Democracia Ourensana', 'CC - Coalición Canaria', 'IU - Izquierda Unida'
 ]
 tipos_area = ['SUBURBANA', 'URBANA', 'RURAL']
 sexos = ['Hombres', 'Mujeres']
@@ -99,4 +91,33 @@ with st.form("formulario_prediccion"):
     submitted = st.form_submit_button("Predecir")
 
 if submitted:
-    st.info("⚠️ Predicción desactivada temporalmente en esta versión de prueba.")
+    df_input = pd.DataFrame([{
+        'provincias': provincia,
+        'codigo_provincia': codigo_provincia,
+        'valor_ica': valor_ica,
+        'altitud': altitud,
+        'sexo': sexo,
+        'tipo_area': tipo_area,
+        'poblacion': poblacion,
+        'partido': partido.split(' - ')[0],
+        'causa_de_muerte': causa_de_muerte
+    }])
+
+    X_input = preparar_datos(df_input)
+    pred = modelo.predict(X_input)[0]
+    proba = modelo.predict_proba(X_input)[0]
+
+    colores_pred = {'baja': '#28a745', 'media': '#ffc107', 'alta': '#dc3545'}
+    color_pred = colores_pred.get(pred, '#007bff')
+
+    st.markdown(f"<h3 style='color:{color_pred}'>Predicción: {pred.upper()}</h3>", unsafe_allow_html=True)
+
+    fig, ax = plt.subplots(figsize=(6, 4))
+    sns.barplot(x=modelo.classes_, y=proba, palette=[colores_pred.get(c, '#007bff') for c in modelo.classes_], ax=ax)
+    ax.set_ylim(0, 1)
+    ax.set_ylabel("Probabilidad")
+    ax.set_xlabel("Nivel de mortalidad")
+    ax.set_title("Probabilidades de Predicción")
+    for i, v in enumerate(proba):
+        ax.text(i, v + 0.02, f"{v:.2f}", ha='center', fontsize=10)
+    st.pyplot(fig)
