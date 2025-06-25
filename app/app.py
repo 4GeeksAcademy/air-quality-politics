@@ -24,7 +24,7 @@ provincias_codigos = {
     "Vizcaya": "48", "Zamora": "49", "Zaragoza": "50", "Ceuta": "51", "Melilla": "52"
 }
 
-url_modelo_drive = "https://drive.google.com/uc?id=1L3H0PgtyXa5hIaZHjpuPjXUGoggrRg6s"
+url_modelo_drive = "https://drive.google.com/uc?id=1blwUBvJke6ZwsSaPnRP9n3QzjImRHSzI"
 ruta_modelo_local = "models/rf_pre_covid.pkl"
 
 def descargar_modelo_si_no_existe(url, path):
