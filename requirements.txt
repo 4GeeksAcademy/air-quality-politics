@@ -1,8 +1,8 @@
+streamlit
 pandas
 numpy
 scikit-learn
-streamlit
-joblib
-gdown
 matplotlib
 seaborn
+joblib
+requests
