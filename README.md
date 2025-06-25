@@ -57,15 +57,11 @@ air-quality-politics/
 │   ├── app.py
 │   ├── preprocesamiento.py
 │   ├── models/
-│   │   ├── modelo_rf_pre_covid.pkl
 │   │   └── columnas_modelo.pkl
 ├── data/
 │   └── df_procesado.csv
 ├── notebooks/
 │   ├── 01_exploracion.ipynb
-│   ├── 02_modelado.ipynb
-├── img/
-│   └── mapa_ica_provincias.png
 ├── requirements.txt
 └── README.md
 ```
