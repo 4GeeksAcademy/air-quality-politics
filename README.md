@@ -2,7 +2,7 @@
 
 > “Lo esencial es invisible a los ojos.” — Antoine de Saint‑Exupéry
 
-🎯 **Accede directamente a la app aquí** 👉 [Abrir aplicación Streamlit](https://air-quality-politics-7zt2ipxuaappvamjddjimw7.streamlit.app/)
+**Accede directamente a la app aquí** 👉 [Abrir aplicación Streamlit](https://air-quality-politics-7zt2ipxuaappvamjddjimw7.streamlit.app/)
 
 ---
 
