@@ -99,33 +99,4 @@ with st.form("formulario_prediccion"):
     submitted = st.form_submit_button("Predecir")
 
 if submitted:
-    df_input = pd.DataFrame([{
-        'provincias': provincia,
-        'codigo_provincia': codigo_provincia,
-        'valor_ica': valor_ica,
-        'altitud': altitud,
-        'sexo': sexo,
-        'tipo_area': tipo_area,
-        'poblacion': poblacion,
-        'partido': partido.split(' - ')[0],
-        'causa_de_muerte': causa_de_muerte
-    }])
-
-    X_input = preparar_datos(df_input)
-    pred = modelo.predict(X_input)[0]
-    proba = modelo.predict_proba(X_input)[0]
-
-    colores_pred = {'baja': '#28a745', 'media': '#ffc107', 'alta': '#dc3545'}
-    color_pred = colores_pred.get(pred, '#007bff')
-
-    st.markdown(f"<h3 style='color:{color_pred}'>Predicción: {pred.upper()}</h3>", unsafe_allow_html=True)
-
-    fig, ax = plt.subplots(figsize=(6,4))
-    sns.barplot(x=modelo.classes_, y=proba, palette=[colores_pred.get(c, '#007bff') for c in modelo.classes_], ax=ax)
-    ax.set_ylim(0,1)
-    ax.set_ylabel("Probabilidad")
-    ax.set_xlabel("Nivel de mortalidad")
-    ax.set_title("Probabilidades de Predicción")
-    for i, v in enumerate(proba):
-        ax.text(i, v + 0.02, f"{v:.2f}", ha='center', fontsize=10)
-    st.pyplot(fig)
+    st.info("⚠️ Predicción desactivada temporalmente en esta versión de prueba.")
